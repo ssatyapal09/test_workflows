@@ -1,0 +1,23 @@
+name: 'PR Title Check'
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  check-title:
+    name: Check title for Semantic message + Jira Ticket
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure valid title
+        if: github.base_ref == github.event.repository.default_branch
+        env:
+          msg_regex: '^(build|hotfix|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(\w+\))?\!?:.*\[[A-Z]+-\d+\]|^(Merge pull request #\d+)'
+        run: |
+          if ! echo "${{github.event.pull_request.title}}" | grep -qE "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(\w+\))?\!?:.*\[[A-Z]+-\d+\]|^(Merge pull request #\d+)"; then
+              echo "ERROR: Your PR title is invalid"
+              echo "ERROR: Please ensure your PR title (${{github.event.pull_request.title}})"
+              echo "ERROR: starts with a semantic message (e.g. build|hotfix|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)"
+              echo "ERROR: and refers to a valid Jira issue (e.g. [CM-123])"
+              exit 1
+          fi 
+
