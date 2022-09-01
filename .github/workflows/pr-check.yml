@@ -10,4 +10,4 @@ jobs:
       - uses: deepakputhraya/action-pr-title@3864bebc79c5f829d25dd42d3c6579d040b0ef16
         with:
           github-token: '${{ secrets.GITHUB_TOKEN }}'
-          regex: '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(\w+\))?\!?:.*\[[A-Z]+-\d+\]|^(Merge pull request #\d+)'
+          regex: '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(\w+\))?\!?:.*\[[A-Z]+-\d+\]'
