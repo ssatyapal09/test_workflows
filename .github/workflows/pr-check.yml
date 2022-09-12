@@ -2,6 +2,8 @@ name: 'JIRA Integration Check'
 on:
   pull_request:
     types: [opened, edited, synchronize, reopened]
+  branches:
+      - 'releases/**'
 
 jobs:
   approve:
