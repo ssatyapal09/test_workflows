@@ -2,7 +2,7 @@ name: 'JIRA Integration Check'
 on:
   pull_request:
     types: [opened, edited, synchronize, reopened]
-  branches:
+    branches:
       - 'prod'
 
 jobs:
