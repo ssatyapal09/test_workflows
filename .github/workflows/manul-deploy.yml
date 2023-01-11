@@ -1,0 +1,36 @@
+name: Manual Deploy
+
+run-name: "${{ inputs.environment }} Deployment by @${{ github.actor }} - ${{ inputs.commit }}"
+
+defaults:
+  run:
+    shell: bash
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: The commit you would like to deploy
+        required: true
+        type: string
+
+      environment:
+        description: The Environment to Deploy to
+        required: true 
+        type: environment
+
+jobs:
+  manual-deploy:
+    name: Deploy Infra to ${{ inputs.environment }}
+    runs-on: [self-hosted, auto]
+    environment:
+      name: ${{ inputs.environment }}
+    concurrency:
+      group: ${{ inputs.environment }}
+      cancel-in-progress: false
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.commit }}
