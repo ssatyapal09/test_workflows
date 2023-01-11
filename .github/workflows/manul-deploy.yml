@@ -17,7 +17,7 @@ on:
       environment:
         description: The Environment to Deploy to
         required: true 
-        type: environment
+        type: string
 
 jobs:
   manual-deploy:
